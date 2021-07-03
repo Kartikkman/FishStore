@@ -24,3 +24,13 @@ class App extends React.Component {
 }
 
 export default App;
+
+/*
+Props are just way of sending data from one component to another . 
+It's like we used to send data to bulit in html tags like input , img . For Ex : 
+
+    <input type = "text" /> 
+    <img src="src.png" />
+
+
+*/
