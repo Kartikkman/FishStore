@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { getFunName } from '../helpers';
 
 class StorePicker extends React.Component{
 
@@ -10,7 +11,7 @@ class StorePicker extends React.Component{
         <form  className="store-selector">
             { /* Some commeny in JSX */ }
             <h2>Plese Enter a Store</h2>
-            <input type="text" required palceholder="Store Name" />
+            <input type="text" required palceholder="Store Name" defaultValue={getFunName()} />
             <button type="submit">Visit Sore </button>
         </form>
         <p> This is some sibling element inside JSX component </p>
