@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header"
 import Inventory from "./Inventory"
 import Order from "./Order"
+import sampleFishList from "../sample-fishes" ;
+import Fish from "./Fish";
 
 class App extends React.Component {
 
@@ -21,6 +23,13 @@ class App extends React.Component {
 
     };
 
+    loadSampleFishes = (event) => {
+
+        // Set the enw fishses object to state 
+            this.setState( { fishes : sampleFishList});
+
+    }
+
     render() {
 
         return (
@@ -28,9 +37,13 @@ class App extends React.Component {
             <div className="catch-of-the-day">
                 <div className="menu">
                     <Header tagline="Catch of The Day" age={69} cool={true} />
+                    <ul className="fishses">
+                        {Object.keys(this.state.fishes).map( key => <Fish key={key} details={this.state.fishes[key]} />)}
+
+                    </ul>
                 </div>
                 <Order />
-                <Inventory addFish = {this.addFish} />
+                <Inventory addFish = {this.addFish} loadSampleFishes = {this.loadSampleFishes} />
             </div>
         );
 
@@ -80,6 +93,16 @@ It's like we used to send data to bulit in html tags like input , img . For Ex :
             <AddFish addFish = {this.props.addFish}/>
 
             Then we can call this method from the child components successfully 
+
+
+*/
+
+/*
+    Looping in React : 
+
+            While JSX templating dosen't provide any sort of looping jor If-Else functionality , so we need to loop in through JS Objects on our own , 
+            Above we havde done it using : Object.keys().map(key => )
+
 
 
 */
