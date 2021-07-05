@@ -4,6 +4,7 @@ import Inventory from "./Inventory"
 import Order from "./Order"
 import sampleFishList from "../sample-fishes" ;
 import Fish from "./Fish";
+import base from "../base";
 
 class App extends React.Component {
 
@@ -12,16 +13,67 @@ class App extends React.Component {
         order: {}
     };
 
+    componentDidMount(){
+        const {params} = this.props.match;
+        const localStorageRef = localStorage.getItem(params.storeId);
+
+        if(localStorageRef && typeof(localStorageRef) != "undefined"){
+            this.setState({order: JSON.parse(localStorageRef)});
+        }
+
+        this.ref = base.syncState(`${params.storeId}/fishes`, { 
+            context: this, 
+            state: "fishes"
+        });
+    }
+
+    componentWillUnmount(){
+        base.removeBinding(this.ref);
+    }
+
+    componentDidUpdate()
+    {
+        const {params} = this.props.match
+        localStorage.setItem(params.storeId, JSON.stringify(this.state.order));
+
+    }
+
+
     addFish = (fish) => {
         
         // 1. Take a copy of the existing state 
             const fishes = {... this.state.fishes};
         // 2. Add our new fish to our fishes 
             fishes[`fish${Date.now()}`] = fish;
-        // Set the enw fishses object to state 
+        // Set the new fishses object to state 
             this.setState({fishes});
 
     };
+
+    updateFish = (key, updatedFish) => { 
+
+        //1. Create a copy of existing fishes 
+            const fishes = { ...this.state.fishes};
+        //2. Update the existing fish with new details 
+            fishes[key] = updatedFish;
+        //3. Set the new fishes object to state 
+            this.setState({fishes})
+
+
+    }
+
+    deleteFish = (key) => { 
+
+        //1. Create a copy of existing fishes 
+            const fishes = { ...this.state.fishes};
+        //2. Update the existing fish with new details 
+            fishes[key] = null;
+        //3. Set the new fishes object to state 
+            this.setState({fishes})
+
+
+    }
+
 
     loadSampleFishes = (event) => {
 
@@ -41,6 +93,19 @@ class App extends React.Component {
 
     };
 
+    removeFromOrder = (key) => { 
+
+        //1. Create a copy of existing orders 
+            const order = { ...this.state.order};
+        //2. Remvoing the Order 
+            delete order[key] ;
+        //3. Set the new fishes object to state 
+            this.setState({order});
+
+
+    }
+
+
 
     render() {
 
@@ -54,8 +119,8 @@ class App extends React.Component {
 
                     </ul>
                 </div>
-                <Order orders={this.state.order} fishes={this.state.fishes} />
-                <Inventory addFish = {this.addFish} loadSampleFishes = {this.loadSampleFishes} />
+                <Order orders={this.state.order} fishes={this.state.fishes} removeFromOrder={this.removeFromOrder} />
+                <Inventory addFish = {this.addFish} updateFish={this.updateFish} loadSampleFishes = {this.loadSampleFishes} fishes= {this.state.fishes} deleteFish={this.deleteFish}/>
             </div>
         );
 
