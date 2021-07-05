@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from "prop-types";
 
 const Header = ({tagline, age}) =>(
 
@@ -18,6 +18,12 @@ const Header = ({tagline, age}) =>(
 
 );
 
+Header.propTypes = {
+    tagline: PropTypes.string.isRequired
+}
+
+
+export default Header;
 
 /*
 class Header extends React.Component {
@@ -43,8 +49,6 @@ class Header extends React.Component {
     }
 }
 */
-
-export default Header;
 
 /*
 Uncommented React Component is made using Lambda Expresssion syntax , It shortens the syntax
