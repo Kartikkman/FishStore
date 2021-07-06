@@ -24,7 +24,6 @@ class StorePicker extends React.Component{
             <input type="text" ref={this.myInput}  required palceholder="Store Name" defaultValue={getFunName()} />
             <button type="submit">Visit Sore </button>
         </form>
-        <p> This is some sibling element inside JSX component </p>
         </Fragment>
         )
     }
